@@ -184,8 +184,15 @@ class OpenArmKER(Teleoperator):
                 if side == "right"
                 else (self.config.left_trigger_deg, self.config.left_gripper_deg)
             )
+            trigger_angle = float(angles[first + len(MOTORS) - 1])
+            if side == "left":
+                # A full pull on this side is positive. Fold a negative reading onto that
+                # same pull so a reversed squeeze still closes the finger.
+                released, pulled = trigger_deg
+                sign = 1.0 if pulled >= released else -1.0
+                trigger_angle = released + sign * abs(trigger_angle - released)
             action[self._key(side, "gripper")] = _trigger_to_gripper(
-                angles[first + len(MOTORS) - 1], trigger_deg, gripper_deg
+                trigger_angle, trigger_deg, gripper_deg
             )
         return action
 
