@@ -108,11 +108,11 @@ def test_one_arm_gives_openarm_follower_keys(tmp_path, ker):
         ("right", 7, -30.0, -32.5),
         ("right", 7, -90.0, 0.0),  # past the pull: clipped
         ("right", 7, 20.0, -65.0),  # past the release: clipped
-        ("left", 15, 0.0, -65.0),
-        ("left", 15, 60.0, 0.0),
-        ("left", 15, 30.0, -32.5),
-        ("left", 15, 90.0, 0.0),
-        ("left", 15, -20.0, -65.0),
+        ("left", 15, 0.0, 65.0),  # released: open
+        ("left", 15, 60.0, 0.0),  # fully pulled: closed
+        ("left", 15, 30.0, 32.5),
+        ("left", 15, 90.0, 0.0),  # past the pull: clipped
+        ("left", 15, -20.0, 43.333333333333336),  # negative reading folds into a pull
     ],
 )
 def test_trigger_maps_to_follower_gripper(tmp_path, ker, side, channel, trigger_deg, gripper_deg):

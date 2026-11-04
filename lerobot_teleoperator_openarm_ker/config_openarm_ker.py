@@ -48,8 +48,10 @@ class OpenArmKERConfig(TeleoperatorConfig):
         right_gripper_deg (`tuple[float, float]`, *optional*, defaults to `(-65.0, 0.0)`):
             Right gripper position for a released and for a fully pulled trigger. The default is open and
             closed in the gripper limits of `openarm_follower`.
-        left_gripper_deg (`tuple[float, float]`, *optional*, defaults to `(-65.0, 0.0)`):
-            Left gripper position for a released and for a fully pulled trigger.
+        left_gripper_deg (`tuple[float, float]`, *optional*, defaults to `(65.0, 0.0)`):
+            Left gripper position for a released and for a fully pulled trigger. On one OpenArm 2.0 the
+            left finger's 0° is the closed stop and the finger opens in the positive direction. The
+            follower's left gripper limit has to allow `(0, 65)`, or the open command is clipped to 0°.
         first_frame_timeout_s (`float`, *optional*, defaults to `2.0`):
             Time that `connect()` waits for the first frame after it starts the stream.
         stall_warning_s (`float`, *optional*, defaults to `0.1`):
@@ -61,7 +63,7 @@ class OpenArmKERConfig(TeleoperatorConfig):
     right_trigger_deg: tuple[float, float] = (0.0, -60.0)
     left_trigger_deg: tuple[float, float] = (0.0, 60.0)
     right_gripper_deg: tuple[float, float] = (-65.0, 0.0)
-    left_gripper_deg: tuple[float, float] = (-65.0, 0.0)
+    left_gripper_deg: tuple[float, float] = (65.0, 0.0)
     first_frame_timeout_s: float = 2.0
     stall_warning_s: float = 0.1
 
